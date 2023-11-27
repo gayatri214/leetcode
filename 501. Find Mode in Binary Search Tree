@@ -1,0 +1,32 @@
+
+class Solution {
+public:
+    TreeNode* prev=NULL;
+    int count=1,max=0;
+    void traverse(TreeNode* root, vector<int> &v){
+        if(root==NULL)return;
+        traverse(root->left,v);
+        if(prev!=NULL){
+            if(root->val==prev->val)
+                count++;
+            else
+                count=1;
+        }
+        if(count>max){
+            max=count;
+            v.clear();
+            v.push_back(root->val);
+        }
+        else if(count==max)
+            v.push_back(root->val);
+        prev=root;
+        traverse(root->right,v);
+    }
+    vector<int> findMode(TreeNode* root) {
+        vector<int> v;
+        if(root==NULL)return v;
+
+        traverse(root,v);
+        return v;
+    }
+};
