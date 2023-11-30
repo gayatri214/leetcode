@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findmax(vector<int> nums, int s, int e){
+        int max=INT_MIN;
+        int idx=-1;
+        for(int i=s;i<=e;++i){
+            if(nums[i]>max){
+                max=nums[i];
+                idx=i;
+             }
+        }
+        return idx;
+    }
+    TreeNode* construct(vector<int>nums,int s, int e){
+        if(s>e)return NULL;
+        if(s==e)return new TreeNode(nums[s]);
+        int mid=findmax(nums,s,e);
+        TreeNode* root= new TreeNode(nums[mid]);
+        root->left=construct(nums,s,mid-1);
+        root->right=construct(nums,mid+1,e);
+
+        return root;
+    }
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        TreeNode* root=construct(nums,0,nums.size()-1);
+        return root;
+    }
+};
